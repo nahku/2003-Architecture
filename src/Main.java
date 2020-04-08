@@ -11,6 +11,8 @@ public class Main {
 
         ICalculator iCalculator1 = new Calculator1(1,1,operand.PLUS);
         ICalculator iCalculator2;
+        ICalculator iCalculator1;
+        ICalculator iCalculator2 = new Calculator2();
         ICalculator iCalculator3;
         ICalculator iCalculator4; //= MyClass1(1,2,"+");
         ArrayList<Float> results;
