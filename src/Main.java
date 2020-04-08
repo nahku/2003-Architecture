@@ -4,19 +4,19 @@ import java.util.Set;
 
 public class Main {
     public static void main(String[] args) {
-        calculate
+        //calculate
     }
 
     public static void calculate0Error(){
 
-        ICalculator iCalculator1;
+        ICalculator iCalculator1 = new Calculator1(1,1,operand.PLUS);
         ICalculator iCalculator2;
         ICalculator iCalculator3;
         ICalculator iCalculator4; //= MyClass1(1,2,"+");
         ArrayList<Float> results;
 
 
-        vote(results);
+        //vote(results);
 
     }
 
