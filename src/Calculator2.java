@@ -1,22 +1,21 @@
 //@author MatrikelNr: 6430174
-
 public class Calculator2 implements ICalculator{
 
     private double result;
 
-    public Calculator2 (double first_number, double sec_number, operand operand)
+    public Calculator2 (double first_value, double sec_value, operand operand)
     {
         if (operand == operand.PLUS){
-            result = first_number + sec_number;
+            result = first_value + sec_value;
         }
         else if (operand == operand.MINUS){
-            result = first_number - sec_number;
+            result = first_value - sec_value;
         }
         else if (operand == operand.MULT){
-            result = first_number * sec_number;
+            result = first_value * sec_value;
         }
         else if (operand == operand.DIV) {
-            result = first_number / sec_number;
+            result = first_value / sec_value;
         }
     }
 
