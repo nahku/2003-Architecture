@@ -1,3 +1,3 @@
 public interface ICalculator {
-    float getResult();
+    double getResult();
 }
