@@ -3,18 +3,22 @@
 public class Calculator4 implements ICalculator {
 
     private static double result;
+    private static double first_num;
+    private static double second_num;
 
     public Calculator4 (double first_number, double sec_number, operand operand)
     {
+        first_num = first_number;
+        second_num =sec_number;
 
         switch(operand){
-            case PLUS: addition(first_number, sec_number);
+            case PLUS: addition();
                        break;
-            case MINUS: subtraction(first_number, sec_number);
+            case MINUS: subtraction();
                         break;
-            case MULT: multiplication(first_number, sec_number);
+            case MULT: multiplication();
                        break;
-            case DIV: division(first_number, sec_number);
+            case DIV: division();
                       break;
             default: break;
         }
@@ -24,24 +28,24 @@ public class Calculator4 implements ICalculator {
         return result;
     }
 
-    private static void addition(double first_number, double sec_number){
-        result = first_number + sec_number;
+    private static void addition(){
+        result = first_num + second_num;
     }
 
-    private static void subtraction(double first_number, double sec_number){
-        result = first_number - sec_number;
+    private static void subtraction(){
+        result = first_num - second_num;
     }
 
-    private static void multiplication(double first_number, double sec_number){
-        result = first_number * sec_number;
+    private static void multiplication(){
+        result = first_num * second_num;
     }
 
-    private static void division(double first_number, double sec_number) {
-        if (sec_number == 0.0) {
+    private static void division() {
+        if (second_num == 0.0) {
             System.out.println("You should not divide a number by zero");
             result = 0.0;
         } else {
-            result = first_number / sec_number;
+            result = first_num / second_num;
         }
     }
 }
