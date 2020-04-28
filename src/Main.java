@@ -5,7 +5,19 @@ import java.util.Set;
 public class Main {
 
     public static void main(String[] args) {
+        calculate0Error();
+        calculate1Error();
+        calculate2Errors();
+        calculateSpecialCase();
         calculateNoCommonResult();
+    }
+
+    public static void printCalculatorsInput(ArrayList<CalculatorInput> calculatorInputs){
+        for(int i = 0; i < 4; i++){
+            System.out.print("Input Calculator" + (i+1) + ": ");
+            System.out.println("Input 1: " + calculatorInputs.get(i).getFirstOperand() + ", Input 2: " +
+                    calculatorInputs.get(i).getSecondOperand() + ", Operator: " + calculatorInputs.get(i).getOperator().name());
+        }
     }
 
     public static void calculateNoCommonResult(){
@@ -99,6 +111,7 @@ public class Main {
         {
             results.add(calculators.get(i).getResult());
         }
+        printCalculatorsInput(calculatorsInput);
 
         vote(results);
     }
@@ -145,6 +158,9 @@ public class Main {
         Double[] unique_array = uniques.toArray( new Double[uniques.size()] );
 
         int deviations = --counter;
+
+        System.out.print("Voting-Ergebnis: ");
+
         switch (deviations){
             case 0:
                 System.out.println("Kein Fehler. Korrekte Loesung: " + correct_result);
@@ -166,5 +182,7 @@ public class Main {
             default:
                 break;
         }
+
+        System.out.println("");
     }
 }
