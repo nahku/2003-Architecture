@@ -3,17 +3,93 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class Main {
+
     public static void main(String[] args) {
-        calculate0Error();
+        calculateNoCommonResult();
+    }
+
+    public static void calculateNoCommonResult(){
+        ArrayList<CalculatorInput> calculatorsInput = new ArrayList<CalculatorInput>();
+        CalculatorInput input1 = new CalculatorInput(1,1,Operator.PLUS);
+        CalculatorInput input2 = new CalculatorInput(1,1,Operator.DIV);
+        CalculatorInput input3 = new CalculatorInput(4,2,Operator.MULT);
+        CalculatorInput input4 = new CalculatorInput(3,3,Operator.MINUS);
+        calculatorsInput.add(input1);
+        calculatorsInput.add(input2);
+        calculatorsInput.add(input3);
+        calculatorsInput.add(input4);
+
+        calculate(calculatorsInput);
+    }
+
+    public static void calculateSpecialCase(){
+        ArrayList<CalculatorInput> calculatorsInput = new ArrayList<CalculatorInput>();
+        CalculatorInput rightInput = new CalculatorInput(1,1,Operator.PLUS);
+        CalculatorInput wrongInput = new CalculatorInput(1,1,Operator.MULT);
+
+        calculatorsInput.add(rightInput);
+        calculatorsInput.add(rightInput);
+        calculatorsInput.add(wrongInput);
+        calculatorsInput.add(wrongInput);
+
+        calculate(calculatorsInput);
+    }
+
+    public static void calculate2Errors(){
+        ArrayList<CalculatorInput> calculatorsInput = new ArrayList<CalculatorInput>();
+        CalculatorInput rightInput = new CalculatorInput(1,1,Operator.PLUS);
+        CalculatorInput wrongInput = new CalculatorInput(1,1,Operator.MULT);
+        CalculatorInput wrongInput2 = new CalculatorInput(1,3,Operator.MULT);
+
+        for (int i = 0; i < 2; i++){
+            calculatorsInput.add(rightInput);
+        }
+        calculatorsInput.add(wrongInput);
+        calculatorsInput.add(wrongInput2);
+
+        calculate(calculatorsInput);
+    }
+
+    public static void calculate1Error(){
+        ArrayList<CalculatorInput> calculatorsInput = new ArrayList<CalculatorInput>();
+        CalculatorInput rightInput = new CalculatorInput(1,1,Operator.PLUS);
+        CalculatorInput wrongInput = new CalculatorInput(1,1,Operator.MULT);
+
+        for (int i = 0; i < 3; i++){
+            calculatorsInput.add(rightInput);
+        }
+
+        calculatorsInput.add(wrongInput);
+
+        calculate(calculatorsInput);
     }
 
     public static void calculate0Error(){
+
+        ArrayList<CalculatorInput> calculatorsInput = new ArrayList<CalculatorInput>();
+        CalculatorInput singleInput = new CalculatorInput(1,1,Operator.PLUS);
+
+        for (int i = 0; i < 4; i++){
+            calculatorsInput.add(singleInput);
+        }
+
+        calculate(calculatorsInput);
+    }
+
+    public static void calculate(ArrayList<CalculatorInput> calculatorsInput){
+
         ArrayList<ICalculator> calculators = new ArrayList<ICalculator>();
         ArrayList<Double> results = new ArrayList<Double>();
-        ICalculator iCalculator1 = new Calculator1(2,1,operand.PLUS);
-        ICalculator iCalculator2 = new Calculator2(5,1, operand.PLUS);
-        ICalculator iCalculator3 = new Calculator3(1,1, operand.PLUS);
-        ICalculator iCalculator4= new Calculator4(1,1, operand.PLUS);
+
+        ICalculator iCalculator1 = new Calculator1(calculatorsInput.get(0).getFirstOperand(),
+                calculatorsInput.get(0).getSecondOperand(),calculatorsInput.get(0).getOperator());
+        ICalculator iCalculator2 = new Calculator1(calculatorsInput.get(1).getFirstOperand(),
+                calculatorsInput.get(1).getSecondOperand(),calculatorsInput.get(1).getOperator());
+        ICalculator iCalculator3 = new Calculator1(calculatorsInput.get(2).getFirstOperand(),
+                calculatorsInput.get(2).getSecondOperand(),calculatorsInput.get(2).getOperator());
+        ICalculator iCalculator4 = new Calculator1(calculatorsInput.get(3).getFirstOperand(),
+                calculatorsInput.get(3).getSecondOperand(),calculatorsInput.get(3).getOperator());
+
         calculators.add(iCalculator1);
         calculators.add(iCalculator2);
         calculators.add(iCalculator3);
@@ -31,6 +107,7 @@ public class Main {
     public static boolean handle_special_case(ArrayList<Double> results, Double[] unique_array){
         int commonness_first=0;
         int commonness_second=0;
+
         for (int i = 0; i <results.size(); i++) {
             if (Double.compare(unique_array[0], results.get(i))==0) {
                 commonness_first++;

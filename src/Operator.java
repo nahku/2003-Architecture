@@ -1,4 +1,4 @@
-public enum operand {
+public enum Operator {
     PLUS,
     MINUS,
     MULT,

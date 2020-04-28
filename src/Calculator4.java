@@ -6,12 +6,12 @@ public class Calculator4 implements ICalculator {
     private static double first_num;
     private static double second_num;
 
-    public Calculator4 (double first_number, double sec_number, operand operand)
+    public Calculator4 (double first_number, double sec_number, Operator Operator)
     {
         first_num = first_number;
         second_num =sec_number;
 
-        switch(operand){
+        switch(Operator){
             case PLUS: addition();
                        break;
             case MINUS: subtraction();
