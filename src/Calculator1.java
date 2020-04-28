@@ -2,18 +2,18 @@
 public class Calculator1 implements ICalculator {
     private double _value1;
     private double _value2;
-    private operand _operand;
+    private Operator _operator;
 
-    public Calculator1(double value1, double value2, operand operand){
+    public Calculator1(double value1, double value2, Operator Operator){
         this._value1 = value1;
         this._value2 = value2;
-        this._operand = operand;
+        this._operator = Operator;
     }
 
     @Override
     public double getResult() {
         double result = 0;
-        switch (this._operand){
+        switch (this._operator){
             case PLUS:
                 result = add();
                 break;

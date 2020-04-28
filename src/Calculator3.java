@@ -3,9 +3,9 @@ public class Calculator3 implements ICalculator{
 
     private double result;
 
-    public Calculator3 (double value_one, double value_two, operand operand)
+    public Calculator3 (double value_one, double value_two, Operator Operator)
     {
-        switch (operand){
+        switch (Operator){
             case PLUS:
                 result = value_one + value_two;
                 break;
