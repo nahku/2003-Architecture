@@ -95,11 +95,11 @@ public class Main {
 
         ICalculator iCalculator1 = new Calculator1(calculatorsInput.get(0).getFirstOperand(),
                 calculatorsInput.get(0).getSecondOperand(),calculatorsInput.get(0).getOperator());
-        ICalculator iCalculator2 = new Calculator1(calculatorsInput.get(1).getFirstOperand(),
+        ICalculator iCalculator2 = new Calculator2(calculatorsInput.get(1).getFirstOperand(),
                 calculatorsInput.get(1).getSecondOperand(),calculatorsInput.get(1).getOperator());
-        ICalculator iCalculator3 = new Calculator1(calculatorsInput.get(2).getFirstOperand(),
+        ICalculator iCalculator3 = new Calculator3(calculatorsInput.get(2).getFirstOperand(),
                 calculatorsInput.get(2).getSecondOperand(),calculatorsInput.get(2).getOperator());
-        ICalculator iCalculator4 = new Calculator1(calculatorsInput.get(3).getFirstOperand(),
+        ICalculator iCalculator4 = new Calculator4(calculatorsInput.get(3).getFirstOperand(),
                 calculatorsInput.get(3).getSecondOperand(),calculatorsInput.get(3).getOperator());
 
         calculators.add(iCalculator1);
