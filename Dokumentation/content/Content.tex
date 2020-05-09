@@ -15,6 +15,33 @@ Vor dem Aufruf der Voting-Funktionalität werden die Eingabedaten ausgegeben, da
 Für jeden Fall (0 Fehler, 1 Fehler, …) wurde eine Methode erstellt, welche die calculate-Methode mit den korrespondierenden Eingabedaten aufruft.
 \section{Voting}
 
+Im Voting Teil erfolgt eine Evaluierung aller Systeme. Hier wird die Konsistenz der einzelnen Systeme zueinander geprüft und dem Benutzer das Ergebnis ausgegeben. 
+
+Diese Evaluierung erfolgt in der Methode \textit{vote()}, welche eine Liste mit allen vier Ergebnissen der Systeme mit übergeben wird. Das Struktogramm zu dieser Methode ist in Abbildung \ref{fig:vote} dargestellt. 
+
+-\begin{figure}[!htbp]
+    \centering
+    \includegraphics[width=1\linewidth]{images/vote_function_struktogramm.PNG}
+    \caption{Struktogramm \textit{vote()}-Funktion}
+    \label{fig:vote}
+\end{figure}
+
+
+ Im ersten Schritt wird in einer Schleife die Ergebnis Liste durchgegangen. Pro Durchgang wird das jeweilige Element einem disjunkten HashSet hinzugefügt und geprüft, ob dieses Element bereits im HashSet vorhanden ist. Falls ja, wird das Element in eine Ergebnisvariable (\textit{correct_result}) überschrieben, anderenfalls wird ein Zähler inkrementiert. Durch den Zähler kann nun die Abweichung ermittelt werden, indem der Zähler dekrementiert wird (Zähler inkrementiert in der Schleife mindestens einmal). Über eine Switch-Anweisung wird nun diese Abweichung geprüft und dem Benutzer das Ergebnis mitgeteilt:
+ 
+ \begin{itemize}
+     \item Abweichung = 0: Alle Systeme übermitteln das gleiche Ergebnis. Kein Fehler aufgetreten. Als Lösung wird die Ergebnisvariable \textit{correct_result} angezeigt.
+     \item Abweichung = 1 (Spezialfall): Hier muss zunächst geprüft werden, ob die zwei verschiedenen Ergebnisse doppelt vorkommen.
+     \begin{itemize}
+         \item Falls ja: Keine eindeutige Lösung, da zwei verschiedenen Ergebnisse doppelt vorkommen. Als zwei Lösungsmöglichkeiten werden die Elemente des HashSets angezeigt.
+         \item Falls nein: Drei Systeme übermitteln das gleiche Ergebnis. Ein Fehler ist aufgetreten. Als Lösung wird die Ergebnisvariable \textit{correct_result} angezeigt.
+     \end{itemize}
+     \item Abweichung = 2: Zwei Systeme übermitteln das gleiche Ergebnis. Die anderen zwei Systeme unterscheiden sich im Ergebnis. Zwei Fehler aufgetreten. Als Lösung wird die Ergebnisvariable \textit{correct_result} angezeigt.
+     \item Abweichung = 3: Keine Übereinstimmung der Systeme. Mehrere Fehler aufgetreten.
+\end{itemize}
+	
+Beim Spezialfall Abweichung = 1 muss geprüft werden, ob die verschiedenen Ergebnisse doppelt vorkommen. Diese Prüfung erfolgt in einer separaten Methode \textit{handle_special_case()}, welche ein Boolean zurückgibt. Diese Methode wurde in Unit-Tests getestet. Hierbei wurden die beiden Fälle „Ergebnisverhältnis 2:2“ und „Ergebnisverhältnis 1:3“ geprüft. Für die Tests wurde das JUnit Jupiter Modul verwendet.
+
 
 \section{Implementierung der einzelnen Calculators}
 Die Implementierung der Calculators ist in den folgenden Abschnitten beschrieben. Bei der Implementierung wurde darauf geachtet, dass nicht alle Calculators gleich implementiert sind, da dies dem Sinn der 2004-Architektur nicht entsprechen würde. Alle Calculators besitzen ihre eigenen Unit-Tests. 
@@ -109,8 +136,72 @@ public class Calculator2 implements ICalculator{
 Der \textit{Calculator2} implementiert das Interface \textit{ICalculator}. Die Klasse \textit{Calculator2} hat ein privates Attribut result vom Typ double. 
 Der Konstruktor der Klasse übergibt die Eingabeparameter an das Calculator-Objekt. Die Eingabeparameter sind: Wert 1, Wert 2 und der Operator. Im Konstruktor wird direkt mittels der Eingabeparameter das Ergebnis berechnet. Dafür wird mit If-Abfragen der Operand ausgemacht und entsprechend das Ergebnis berechnet. Das Ergebnis wird dem Klassenattribut result zugewiesen.
 Die Klasse verfügt außerdem über die öffentliche Methode \textit{getResult()}, die die gleichnamige Methode des Interfaces implementiert. Die Methode gibt den Wert des Attributs result zurück.
-\chapter{Calculator 3 (Bearbeiter: )}
-\chapter{Calculator 4 (Bearbeiter: )}
+
+\chapter{Calculator 3 (Bearbeiter: 6274958 )}
+
+\begin{lstlisting}[language=Java,basicstyle=\scriptsize, caption= Calculator 3]
+public class Calculator3 implements ICalculator{
+
+    private double result;
+
+    public Calculator3 (double value_one, double value_two, Operator Operator)
+    {
+        switch (Operator){
+            case PLUS:
+                result = value_one + value_two;
+                break;
+            case MINUS:
+                result = value_one - value_two;
+                break;
+            case MULT:
+                result = value_one * value_two;
+                break;
+            case DIV:
+                result = value_one / value_two;
+                break;
+        }
+    }
+
+    public double getResult() {
+        return result;
+    }
+}
+\end{lstlisting}
+
+Im Folgenden wird das System Nummer 3 der 2003-Architektur beschrieben. Hierfür wurde, wie auch bei den anderen Systemen, eine eigene Klasse erstellt, welche das Interface \textit{ICalculator} implementiert. Dem Konstruktor der Klasse werden zwei Werte und ein Operand übergeben. Die Methode basiert auf einer Switch-Anweisung, welche den Inhalt des übergebenen Operanden prüft. Hierbei können die vier Fälle der Operanden (\textit{PLUS, MINUS, MULT, DIV}) in der Anweisung eintreten. Durch die Auswahl wird entschieden, welche Berechnungsvorschrift für die Verrechnung der zwei übergebenen Werte verwendet werden soll.  Das Ergebnis der Berechnung wird in eine private Ergebnisvariable geschrieben. Mittels der Methode \textit{getResult()}, welche den Inhalt der Ergebnisvariable zurückgibt, kann außerhalb der Klasse auf der Ergebnis zugegriffen werden. 
+
+
+Um die ganze Methode und dessen Berechnungsvorschriften zu testen, wurden Unit-Tests geschrieben. Zu jeder Berechnungsvorschrift wurden jeweils zwei Tests geschrieben. Hier wurde besonders geschaut, dass Spezialfälle, wie zum Beispiel Dezimalzahlen (Kommazahlen) oder negative Zahlen, in den Tests abgedeckt werden. Für die Tests wurde das JUnit Jupiter Modul verwendet.
+
+
+\chapter{Calculator 4 (Bearbeiter: 5060216 )}
+
+Diese Klasse wurde nach der testgetriebenen Methode entwickelt. Um bei den Unit Tests ausschließlich einzelne Methoden zu testen, wurde jede einzelne Funktionalität in einer eigenen Methode ausgelagert. Insgesamt gibt es eine Methoden für jede Rechenoperation, die alle das gleiche Interface besitzen – keine Übergabeparameter, keine Rückgabeparameter. Des Weiteren wurde die ICalculator \textit{getResult} Methode implementiert, welche das berechnete Ergebnis zurückgibt.
+
+Da alle Methoden die erste und zweite Zahl zur Berechnung benötigen, werden die Zahlen nach Aufruf des Konstruktors zunächst in private static Variablen gespeichert. Aus Gründen der Performance, wird nicht jede Methode mit der ersten und zweiten Zahl aufgerufen. Die Variablen sind static, da diese nur einmal bei Konstruktoraufruf bzw. nach der Berechnung gesetzt werden. Da die Klasse jedoch nicht static ist, hat dies nur bedingt eine Relevanz, bietet allerdings mehr Spielräume für spätere Refactoring-Maßnahmen.
+In einem \textit{switch-case} wird der dem Konstruktor übergebene Enum-Operand ausgewertet und die zugehörige Rechenoperation-Methode aufgerufen. Jede Rechenoperation-Methode speichert das berechnete Ergebnis in eine Variable, welche durch die getResult Methode zurückgegeben wird.
+
+Die Divisionsmethode besitzt zusätzlich zu der Rechenoperation noch ein Abfangen des „Zero Divsion Errors“, um zu verhindern, dass das Programm bei einer ungültigen Rechenoperation crasht. In diesem Fall wird der Nutzer über die ungültige Rechenoperation informiert und das Ergebnis gleich Null gesetzt.
+
+Die Test Klasse wurde mit dem jUnit Modul entwickelt. Da in der Klasse mit doubles gearbeitet wird treten Rundungsfehler aufgrund der Tatsache, dass mit floating point numbers gerechnet wird, auf. Dadurch können manche Tests scheitern obwohl die Methoden das eigentliche richtige Ergebnis berechnet haben. Um diese Problemstellung zu lösen, wird der \textit{assertEqual}-Befehl verwendet um ein delta festzulegen, welches toleriert wird. Liegt das Ergebnis der Methode innerhalb dieses Toleranzbandes des Exaktwertes, gilt die Berechnung als korrekt.
+
+Jede Operation wurde mit double Zahlen getestet und es wurde versucht möglichst viele Fälle zu testen. Jede Methode besitzt mindestens 4 Testfälle, die aus der folgenden Tabelle 1 zu entnehmen sind.
+
+
+\begin{tabular}{| l | l | l |}
+	\toprule
+	Testfall & VZ 1. Nummer & VZ 2. Nummer\\
+	\midrule
+	1 & + & +\\
+	2 & + & -\\
+	3 & - & +\\
+	4 & - & -\\
+	\bottomrule 
+\caption{Testfälle}
+\end{tabular}
+
+Des Weiteren wurde bei der Divisionsmethode getestet, ob das Abfangen des Sonderfalls (\textit{second_num=0}) korrekt funktioniert. Alle Tests laufen erfolgreich durch und beweisen die korrekte Implementierung.
+
 \chapter{Anhang}
 \begin{figure}[H]
 \centering
