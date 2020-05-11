@@ -137,6 +137,11 @@ Der \textit{Calculator2} implementiert das Interface \textit{ICalculator}. Die K
 Der Konstruktor der Klasse übergibt die Eingabeparameter an das Calculator-Objekt. Die Eingabeparameter sind: Wert 1, Wert 2 und der Operator. Im Konstruktor wird direkt mittels der Eingabeparameter das Ergebnis berechnet. Dafür wird mit If-Abfragen der Operand ausgemacht und entsprechend das Ergebnis berechnet. Das Ergebnis wird dem Klassenattribut result zugewiesen.
 Die Klasse verfügt außerdem über die öffentliche Methode \textit{getResult()}, die die gleichnamige Methode des Interfaces implementiert. Die Methode gibt den Wert des Attributs result zurück.
 
+Die Funktionalität der Klasse wurde mit Unit-Tests verifiziert. Die Unit-Tests wurden mittels des Frameworks JUnit entwickelt.
+Insgesamt gibt es vier Tests, einen für jede Rechenart:
+Addieren, Substrahieren, Multiplizieren und Dividieren. Diese vier Tests bieten eine komplette Codeabdeckung und prüfen neben allgemeinen Fällen auch Grenzfälle ab wie etwa das Multiplizieren mit null oder das Rechnen mit negativen Vorzeichen.
+
+
 \chapter{Calculator 3 (Bearbeiter: 6274958)}
 
 \begin{lstlisting}[language=Java,basicstyle=\scriptsize, caption= Calculator 3]
