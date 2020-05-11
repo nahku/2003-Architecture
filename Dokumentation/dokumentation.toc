@@ -9,7 +9,11 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {1.1}Aufrufen der Calculators}{1}{section.1.1}
 \defcounter {refsection}{0}\relax 
+<<<<<<< HEAD
 \contentsline {section}{\numberline {1.2}Voting}{1}{section.1.2}
+=======
+\contentsline {section}{\numberline {1.2}Voting}{2}{section.1.2}% 
+>>>>>>> nahku
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {1.3}Implementierung der einzelnen Calculators}{3}{section.1.3}
 \defcounter {refsection}{0}\relax 
