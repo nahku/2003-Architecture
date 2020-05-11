@@ -1,31 +1,67 @@
 %!TEX root = ../dokumentation.tex
 
 \chapter{Gruppenarbeit}\label{cha:Gruppenarbeit}
-Die Aufgabe bestand in der Implementierung einer 2003-Architektur. Da unsere Gruppe aus vier Mitgliedern besteht, wurde eine 2004-Architektur implementiert. Die Implementierte Anwendung
-Für die Calculators haben wurde ein Interface entwickelt, welches jeder Calculator implementiert. Dieses Interface bietet eine Methode, um die Ergebnisse der Berechnungen der Calculators abzufragen.
+Die Aufgabe bestand in der Implementierung einer 2003-Architektur. Da unsere Gruppe aus vier Mitgliedern besteht, wurde eine 2004-Architektur implementiert.
+Für die Calculators haben wurde ein Interface entwickelt, welches jeder Calculator implementiert.
+Dieses Interface bietet eine Methode, um die Ergebnisse der Berechnungen der Calculators abzufragen.
 Die Main-Klasse bildet den Einstiegspunkt des Programms und bündelt die Funktionalität zum Aufrufen der Calculators und der Voting-Funktionalität.
 
-Für die Operatoren, die die Calculators unterstützen, wurde ein Enum-Datentyp erstellt
+Für die Operatoren, die die Calculators unterstützen, wurde der Enum-Datentyp \textit{Operator} erstellt. Dieser ist im Folgenden in Listing \ref{lst:Enum} dargestellt.
+
+\begin{lstlisting}[language=Java,basicstyle=\scriptsize, caption= Enum-Datentyp für die Operanden,label=lst:Enum]
+public enum Operator {
+    PLUS,
+    MINUS,
+    MULT,
+    DIV;
+}
+\end{lstlisting}
 
 \section{Aufrufen der Calculators}
-Zum Aufrufen der Calculators und Aufrufen des Votings wurde die Methode calculate entwickelt.
+Zum Aufrufen der Calculators und Aufrufen des Votings wurde die Methode \textit{calculate()} entwickelt.
 
-Diese hat eine Liste an CalculatorInput-Objekten als Eingabeparameter und erzeugt auf Grundlagen dessen vier Calculator-Objekte basierend Calculator1, Calculator2, Calculator3 und Calculator4. Diese vier Calculator-Objekte werden dann in eine List gefügt, um anschließend durch diese zu iterieren und die Methode getResult des Interfaces aufrufen. Die zurückgegebenen Ergebnisse der getResult-Methode werden in eine neue Liste gefügt. Mit den Ergebnissen wird die Vote-Methode aufgerufen.
+Diese hat eine Liste an \textit{CalculatorInput}-Objekten als Eingabeparameter (die \textit{CalculatorInput}-Klasse ist in Listing \ref{lst:CalculatorInput} dargestellt) und erzeugt auf Grundlagen dessen vier Calculator-Objekte basierend \textit{Calculator1}, \textit{Calculator2}, \textit{Calculator3} und \textit{Calculator4}. Diese vier Calculator-Objekte werden dann in eine List gefügt, um anschließend durch diese zu iterieren und die Methode \textit{getResult} des Interfaces für jeden Calculator aufzurufen. Die zurückgegebenen Ergebnisse der \textit{getResult()}-Methode werden in eine neue Liste gefügt. Mit den Ergebnissen wird die Vote-Methode aufgerufen.
 Vor dem Aufruf der Voting-Funktionalität werden die Eingabedaten ausgegeben, damit das Voting-Ergebnis nachvollzogen werden kann.
 Für jeden Fall (0 Fehler, 1 Fehler, …) wurde eine Methode erstellt, welche die calculate-Methode mit den korrespondierenden Eingabedaten aufruft.
+
+\begin{lstlisting}[language=Java,basicstyle=\scriptsize, caption=CalculatorInput Klasse,label=lst:CalculatorInput]
+public class CalculatorInput {
+
+    private double operand1;
+    private double operand2;
+    private Operator operator;
+
+    CalculatorInput(double operand1, double operand2, Operator operator){
+        this.operand1 = operand1;
+        this.operand2 = operand2;
+        this.operator = operator;
+    }
+
+    double getFirstOperand(){
+        return operand1;
+    }
+
+    double getSecondOperand(){
+        return operand2;
+    }
+
+    Operator getOperator(){
+        return operator;
+    }
+}
+\end{lstlisting}
 \section{Voting}
 
 Im Voting Teil erfolgt eine Evaluierung aller Systeme. Hier wird die Konsistenz der einzelnen Systeme zueinander geprüft und dem Benutzer das Ergebnis ausgegeben. 
 
 Diese Evaluierung erfolgt in der Methode \textit{vote()}, welche eine Liste mit allen vier Ergebnissen der Systeme mit übergeben wird. Das Struktogramm zu dieser Methode ist in Abbildung \ref{fig:vote} dargestellt. 
 
--\begin{figure}[!htbp]
+\begin{figure}[!htbp]
     \centering
     \includegraphics[width=1\linewidth]{images/vote_function_struktogramm.PNG}
     \caption{Struktogramm \textit{vote()}-Funktion}
     \label{fig:vote}
 \end{figure}
-
 
  Im ersten Schritt wird in einer Schleife die Ergebnis Liste durchgegangen. Pro Durchgang wird das jeweilige Element einem disjunkten HashSet hinzugefügt und geprüft, ob dieses Element bereits im HashSet vorhanden ist. Falls ja, wird das Element in eine Ergebnisvariable (\textit{correct\textunderscore result}) überschrieben, anderenfalls wird ein Zähler inkrementiert. Durch den Zähler kann nun die Abweichung ermittelt werden, indem der Zähler dekrementiert wird (Zähler inkrementiert in der Schleife mindestens einmal). Über eine Switch-Anweisung wird nun diese Abweichung geprüft und dem Benutzer das Ergebnis mitgeteilt:
  
@@ -42,6 +78,7 @@ Diese Evaluierung erfolgt in der Methode \textit{vote()}, welche eine Liste mit 
 	
 Beim Spezialfall Abweichung = 1 muss geprüft werden, ob die verschiedenen Ergebnisse doppelt vorkommen. Diese Prüfung erfolgt in einer separaten Methode \textit{handle\textunderscore special\textunderscore case()}, welche ein Boolean zurückgibt. Diese Methode wurde in Unit-Tests getestet. Hierbei wurden die beiden Fälle „Ergebnisverhältnis 2:2“ und „Ergebnisverhältnis 1:3“ geprüft. Für die Tests wurde das JUnit Jupiter Modul verwendet.
 
+Im Anhang in Abbildung \ref{fig:output} ist die Ausgabe des Tools für alle möglichen Zustände aufgeführt.
 
 \section{Implementierung der einzelnen Calculators}
 Die Implementierung der Calculators ist in den folgenden Abschnitten beschrieben. Bei der Implementierung wurde darauf geachtet, dass nicht alle Calculators gleich implementiert sind, da dies dem Sinn der 2004-Architektur nicht entsprechen würde. Alle Calculators besitzen ihre eigenen Unit-Tests. 
@@ -105,7 +142,8 @@ Dieser wird geprüft, wenn der Nutzer die Methode \textit{getResult()} aufruft.
 Die Methode \textit{getResult()} implementiert die entsprechende Methode des Interfaces.
 Über die switch-Anweisung wird die zu dem jeweiligen Operator passende Methode zur Berechnung aufgerufen und am Ende wird das Resultat zurückgegeben.
 Für die jeweilige Berechnung werden die vier Methoden \textit{add()}, \textit{subtract()}, \textit{multiply()} und \textit{divide()} aufgerufen, die auf die Klassenattribute zugreifen und entsprechend das Ergebnis berechnen und zurückgeben.\\
-Das zurückgegebene Ergebnis wird in der lokalen Variable \textit{result} der Methode \textit{getResult()} gespeichert und die Methode gibt den Wert dieser Variable zurück.
+Das zurückgegebene Ergebnis wird in der lokalen Variable \textit{result} der Methode \textit{getResult()} gespeichert und die Methode gibt den Wert dieser Variable zurück.\\
+Die Rechenmethoden wurden mittels des JUnit-Frameworks Unit-getestet. Dafür wurden 12 Test-Cases entwickelt (drei pro Methode), welche die Funktionalität repräsentativ prüfen. Mit den Test-Cases wurde 100 \% Statement-Abdeckung erreicht.
 \chapter{Calculator 2 (Bearbeiter: 6430174)}
 \begin{lstlisting}[language=Java,basicstyle=\scriptsize, caption= Calculator 2]
 public class Calculator2 implements ICalculator{
@@ -134,7 +172,7 @@ public class Calculator2 implements ICalculator{
 }
 \end{lstlisting}
 Der \textit{Calculator2} implementiert das Interface \textit{ICalculator}. Die Klasse \textit{Calculator2} hat ein privates Attribut result vom Typ double. 
-Der Konstruktor der Klasse übergibt die Eingabeparameter an das Calculator-Objekt. Die Eingabeparameter sind: Wert 1, Wert 2 und der Operator. Im Konstruktor wird direkt mittels der Eingabeparameter das Ergebnis berechnet. Dafür wird mit If-Abfragen der Operand ausgemacht und entsprechend das Ergebnis berechnet. Das Ergebnis wird dem Klassenattribut result zugewiesen.
+Der Konstruktor der Klasse übergibt die Eingabeparameter an das Calculator-Objekt. Die Eingabeparameter sind: Wert 1, Wert 2 und der Operator. Im Konstruktor wird direkt mittels der Eingabeparameter das Ergebnis berechnet. Dafür wird mit If-Abfragen der Operand ausgemacht und entsprechend das Ergebnis berechnet. Das Ergebnis wird dem Klassenattribut \textit{result} zugewiesen.
 Die Klasse verfügt außerdem über die öffentliche Methode \textit{getResult()}, die die gleichnamige Methode des Interfaces implementiert. Die Methode gibt den Wert des Attributs result zurück.
 
 \chapter{Calculator 3 (Bearbeiter: 6274958)}
@@ -168,7 +206,7 @@ public class Calculator3 implements ICalculator{
 }
 \end{lstlisting}
 
-Im Folgenden wird das System Nummer 3 der 2003-Architektur beschrieben. Hierfür wurde, wie auch bei den anderen Systemen, eine eigene Klasse erstellt, welche das Interface \textit{ICalculator} implementiert. Dem Konstruktor der Klasse werden zwei Werte und ein Operand übergeben. Die Methode basiert auf einer Switch-Anweisung, welche den Inhalt des übergebenen Operanden prüft. Hierbei können die vier Fälle der Operanden (\textit{PLUS, MINUS, MULT, DIV}) in der Anweisung eintreten. Durch die Auswahl wird entschieden, welche Berechnungsvorschrift für die Verrechnung der zwei übergebenen Werte verwendet werden soll.  Das Ergebnis der Berechnung wird in eine private Ergebnisvariable geschrieben. Mittels der Methode \textit{getResult()}, welche den Inhalt der Ergebnisvariable zurückgibt, kann außerhalb der Klasse auf der Ergebnis zugegriffen werden. 
+Im Folgenden wird das System Nummer 3 der 2004-Architektur beschrieben. Hierfür wurde, wie auch bei den anderen Systemen, eine eigene Klasse erstellt, welche das Interface \textit{ICalculator} implementiert. Dem Konstruktor der Klasse werden zwei Werte und ein Operand übergeben. Die Methode basiert auf einer Switch-Anweisung, welche den Inhalt des übergebenen Operanden prüft. Hierbei können die vier Fälle der Operanden (\textit{PLUS, MINUS, MULT, DIV}) in der Anweisung eintreten. Durch die Auswahl wird entschieden, welche Berechnungsvorschrift für die Verrechnung der zwei übergebenen Werte verwendet werden soll.  Das Ergebnis der Berechnung wird in eine private Ergebnisvariable geschrieben. Mittels der Methode \textit{getResult()}, welche den Inhalt der Ergebnisvariable zurückgibt, kann außerhalb der Klasse auf der Ergebnis zugegriffen werden. 
 
 
 Um die ganze Methode und dessen Berechnungsvorschriften zu testen, wurden Unit-Tests geschrieben. Zu jeder Berechnungsvorschrift wurden jeweils zwei Tests geschrieben. Hier wurde besonders geschaut, dass Spezialfälle, wie zum Beispiel Dezimalzahlen (Kommazahlen) oder negative Zahlen, in den Tests abgedeckt werden. Für die Tests wurde das JUnit Jupiter Modul verwendet.
@@ -208,4 +246,5 @@ Des Weiteren wurde bei der Divisionsmethode getestet, ob das Abfangen des Sonder
 \centering
 \includegraphics[width=1\textwidth]{images/tool_output.png}
 \caption{Ausgabe des Tools}
+\label{fig:output}
 \end{figure}
