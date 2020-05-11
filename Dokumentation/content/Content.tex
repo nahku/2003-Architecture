@@ -2,13 +2,13 @@
 
 \chapter{Gruppenarbeit}\label{cha:Gruppenarbeit}
 Die Aufgabe bestand in der Implementierung einer 2003-Architektur. Da unsere Gruppe aus vier Mitgliedern besteht, wurde eine 2004-Architektur implementiert.
-Für die Calculators haben wurde ein Interface entwickelt, welches jeder Calculator implementiert.
+Für die Calculators wurde ein Interface entwickelt, welches jeder Calculator implementiert.
 Dieses Interface bietet eine Methode, um die Ergebnisse der Berechnungen der Calculators abzufragen.
 Die Main-Klasse bildet den Einstiegspunkt des Programms und bündelt die Funktionalität zum Aufrufen der Calculators und der Voting-Funktionalität.
 
-Für die Operatoren, die die Calculators unterstützen, wurde der Enum-Datentyp \textit{Operator} erstellt. Dieser ist im Folgenden in Listing \ref{lst:Enum} dargestellt.
+Für die Operatoren, die die Calculators unterstützen, wurde der Enum-Datentyp \textit{Operator} erstellt. Dieser ist im folgenden Listing \ref{lst:Enum} dargestellt.
 
-\begin{lstlisting}[language=Java,basicstyle=\scriptsize, caption= Enum-Datentyp für die Operanden,label=lst:Enum]
+\begin{lstlisting}[language=Java,basicstyle=\scriptsize, caption= Enum-Datentyp für die Operator,label=lst:Enum]
 public enum Operator {
     PLUS,
     MINUS,
@@ -20,7 +20,7 @@ public enum Operator {
 \section{Aufrufen der Calculators}
 Zum Aufrufen der Calculators und Aufrufen des Votings wurde die Methode \textit{calculate()} entwickelt.
 
-Diese hat eine Liste an \textit{CalculatorInput}-Objekten als Eingabeparameter (die \textit{CalculatorInput}-Klasse ist in Listing \ref{lst:CalculatorInput} dargestellt) und erzeugt auf Grundlagen dessen vier Calculator-Objekte basierend \textit{Calculator1}, \textit{Calculator2}, \textit{Calculator3} und \textit{Calculator4}. Diese vier Calculator-Objekte werden dann in eine List gefügt, um anschließend durch diese zu iterieren und die Methode \textit{getResult} des Interfaces für jeden Calculator aufzurufen. Die zurückgegebenen Ergebnisse der \textit{getResult()}-Methode werden in eine neue Liste gefügt. Mit den Ergebnissen wird die Vote-Methode aufgerufen.
+Diese hat eine Liste an \textit{CalculatorInput}-Objekten als Eingabeparameter (die \textit{CalculatorInput}-Klasse ist in Listing \ref{lst:CalculatorInput} dargestellt) und erzeugt auf Grundlagen dessen vier Calculator-Objekte: \textit{Calculator1}, \textit{Calculator2}, \textit{Calculator3} und \textit{Calculator4}. Diese vier Calculator-Objekte werden dann in eine List gefügt, um anschließend durch diese zu iterieren und die Methode \textit{getResult} des Interfaces für jeden Calculator aufzurufen. Die zurückgegebenen Ergebnisse der \textit{getResult()}-Methode werden in eine neue Liste gefügt. Mit den Ergebnissen wird die Vote-Methode aufgerufen.
 Vor dem Aufruf der Voting-Funktionalität werden die Eingabedaten ausgegeben, damit das Voting-Ergebnis nachvollzogen werden kann.
 Für jeden Fall (0 Fehler, 1 Fehler, …) wurde eine Methode erstellt, welche die calculate-Methode mit den korrespondierenden Eingabedaten aufruft.
 
@@ -63,7 +63,7 @@ Diese Evaluierung erfolgt in der Methode \textit{vote()}, welche eine Liste mit 
     \label{fig:vote}
 \end{figure}
 
- Im ersten Schritt wird in einer Schleife die Ergebnis Liste durchgegangen. Pro Durchgang wird das jeweilige Element einem disjunkten HashSet hinzugefügt und geprüft, ob dieses Element bereits im HashSet vorhanden ist. Falls ja, wird das Element in eine Ergebnisvariable (\textit{correct\textunderscore result}) überschrieben, anderenfalls wird ein Zähler inkrementiert. Durch den Zähler kann nun die Abweichung ermittelt werden, indem der Zähler dekrementiert wird (Zähler inkrementiert in der Schleife mindestens einmal). Über eine Switch-Anweisung wird nun diese Abweichung geprüft und dem Benutzer das Ergebnis mitgeteilt:
+ Im ersten Schritt wird in einer Schleife die Ergebnisliste durchgegangen. Pro Durchgang wird das jeweilige Element einem disjunkten HashSet hinzugefügt und geprüft, ob dieses Element bereits im HashSet vorhanden ist. Falls ja, wird das Element in eine Ergebnisvariable (\textit{correct\textunderscore result}) überschrieben, anderenfalls wird ein Zähler inkrementiert. Durch den Zähler kann nun die Abweichung ermittelt werden, indem der Zähler dekrementiert wird (Zähler inkrementiert in der Schleife mindestens einmal). Über eine Switch-Anweisung wird nun diese Abweichung geprüft und dem Benutzer das Ergebnis mitgeteilt:
  
  \begin{itemize}
      \item Abweichung = 0: Alle Systeme übermitteln das gleiche Ergebnis. Kein Fehler aufgetreten. Als Lösung wird die Ergebnisvariable \textit{correct\textunderscore result} angezeigt.
@@ -133,8 +133,8 @@ public class Calculator1 implements ICalculator {
     }
 }
 \end{lstlisting}
-Die Klasse \textit{Calculator1} implementiert das Interface \textit{ICalculator} und besitzt drei Attribute vom Typ \textit{double}: \textit{\textunderscore value1}, \textit{\textunderscore value2} und \textit{\textunderscore operand}.\\
-Dem Konstruktor der Klasse werden die Eingabeparameter value1, value2 und operand übergeben und dieser setzt die Klassenattribute gleich der Eingabeparameter.\\
+Die Klasse \textit{Calculator1} implementiert das Interface \textit{ICalculator} und besitzt drei Attribute vom Typ \textit{double}: \textit{\textunderscore value1}, \textit{\textunderscore value2} und \textit{\textunderscore operator}.\\
+Dem Konstruktor der Klasse werden die Eingabeparameter value1, value2 und operator übergeben und dieser setzt die Klassenattribute gleich der Eingabeparameter.\\
 Neben den drei Attributen besitzt die Klasse die vier private Methoden \textit{add()}, \textit{subtract()}, \textit{multiply()} und \textit{divide()}.
 Diese sind Hilfsfunktionen, um aus den \textit{values} das Ergebnis zu berechnen.
 Welche dieser Methoden aufgerufen wird, hängt von dem Operator ab.\\
@@ -172,12 +172,12 @@ public class Calculator2 implements ICalculator{
 }
 \end{lstlisting}
 Der \textit{Calculator2} implementiert das Interface \textit{ICalculator}. Die Klasse \textit{Calculator2} hat ein privates Attribut result vom Typ double. 
-Der Konstruktor der Klasse übergibt die Eingabeparameter an das Calculator-Objekt. Die Eingabeparameter sind: Wert 1, Wert 2 und der Operator. Im Konstruktor wird direkt mittels der Eingabeparameter das Ergebnis berechnet. Dafür wird mit If-Abfragen der Operand ausgemacht und entsprechend das Ergebnis berechnet. Das Ergebnis wird dem Klassenattribut \textit{result} zugewiesen.
+Der Konstruktor der Klasse übergibt die Eingabeparameter an das Calculator-Objekt. Die Eingabeparameter sind: $first\textunderscore value$, $sec\textunderscore value$ und $Operand$. Im Konstruktor wird direkt mittels der Eingabeparameter das Ergebnis berechnet. Dafür wird mit If-Abfragen der Operand ausgemacht und entsprechend das Ergebnis berechnet. Das Ergebnis wird dem Klassenattribut \textit{result} zugewiesen.
 Die Klasse verfügt außerdem über die öffentliche Methode \textit{getResult()}, die die gleichnamige Methode des Interfaces implementiert. Die Methode gibt den Wert des Attributs result zurück.
 
 Die Funktionalität der Klasse wurde mit Unit-Tests verifiziert. Die Unit-Tests wurden mittels des Frameworks JUnit entwickelt.
 Insgesamt gibt es vier Tests, einen für jede Rechenart:
-Addieren, Substrahieren, Multiplizieren und Dividieren. Diese vier Tests bieten eine komplette Codeabdeckung und prüfen neben allgemeinen Fällen auch Grenzfälle ab wie etwa das Multiplizieren mit null oder das Rechnen mit negativen Vorzeichen.
+Addieren, Substrahieren, Multiplizieren und Dividieren. Diese vier Tests bieten eine komplette Codeabdeckung und prüfen neben allgemeinen Fällen auch Grenzfälle wie etwa das Multiplizieren mit null oder das Rechnen mit negativen Vorzeichen.
 
 
 \chapter{Calculator 3 (Bearbeiter: 6274958)}

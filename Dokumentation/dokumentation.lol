@@ -3,9 +3,9 @@
 \defcounter {refsection}{0}\relax 
 \addvspace {10\p@ }
 \defcounter {refsection}{0}\relax 
-\contentsline {lstlisting}{\numberline {1.1}Enum-Datentyp f\IeC {\"u}r die Operanden}{1}{lstlisting.1.1}% 
+\contentsline {lstlisting}{\numberline {1.1}Enum-Datentyp f\IeC {\"u}r die Operator}{1}{lstlisting.1.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {lstlisting}{\numberline {1.2}CalculatorInput Klasse}{1}{lstlisting.1.2}% 
+\contentsline {lstlisting}{\numberline {1.2}CalculatorInput Klasse}{1}{lstlisting.1.2}
 \defcounter {refsection}{0}\relax 
 \addvspace {10\p@ }
 \defcounter {refsection}{0}\relax 
